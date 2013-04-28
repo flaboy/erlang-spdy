@@ -82,7 +82,7 @@ handle_cast({snd, _StreamID, Frame}, State) ->
     {noreply, State}.
 
 %% means we are the controlling process for the socket: go go go
-handle_info(shoot, State = #state{transport=Transport, socket=Socket}) ->
+handle_info({shoot, Sock}, State = #state{transport=Transport, socket=Socket}) ->
     ?LOG("Shoot.",[]),
     case Transport of 
         gen_tcp -> inet:setopts(Socket, [{active,once}, binary, {packet,raw}]);
